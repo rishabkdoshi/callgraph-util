@@ -97,10 +97,13 @@ public class Main {
         for(int i=0;i< argsArr.length;i++){
             String arg = argsArr[i];
 
-            //ends with [] => arr, => add [ to the start
-            if(arg.endsWith("[]")){
-                stringBuilder.append("[");
-                arg = arg.substring(0,arg.length()-2);
+            //ends with ] => arr, => add [ to the start
+            if(arg.endsWith("]")){
+                char[] chars = arg.toCharArray();
+                for(char c: chars){
+                    if(c=='[')
+                        stringBuilder.append(c);
+                }
             }
 
             // / exists implies the current argument is not a primitive type => add L to the start
