@@ -116,6 +116,16 @@ public class Main {
                 stringBuilder.append("C");
             }else if(arg.startsWith(("long"))){
                 stringBuilder.append("J");
+            }else if(arg.startsWith("double")){
+                stringBuilder.append("D");
+            }else if(arg.startsWith("float")){
+                stringBuilder.append("F");
+            }else if(arg.startsWith("boolean")){
+                stringBuilder.append("Z");
+            }else if(arg.startsWith("short")){
+                stringBuilder.append("S");
+            }else if(arg.startsWith("byte")){
+                stringBuilder.append("B");
             }
 
             if(i!=argsArr.length-1){
