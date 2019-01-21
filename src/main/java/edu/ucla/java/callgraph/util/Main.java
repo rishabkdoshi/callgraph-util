@@ -50,7 +50,7 @@ public class Main {
         String reachableMethods = g.
                 getReachableMethods(origin).
                 stream().
-                map(s -> s+"\n"+transformMethodFormat(s)+"\n\n").
+                map(s -> transformMethodFormat(s)+"\n").
                 reduce(new StringBuilder(),
                         StringBuilder::append,
                         StringBuilder::append).toString();
@@ -64,7 +64,7 @@ public class Main {
         }
     }
 
-    private static String transformMethodFormat(String method){
+    public static String transformMethodFormat(String method){
 
         //replace all . with / and after that replace : with .
         String methodName = method.replace(".","/").replace(":",".").replace("<init>","\"<init>\"");
@@ -80,7 +80,7 @@ public class Main {
             returnType = "";
         }
 
-        String format = "%s(%s)%s";
+        String format = "%s:(%s)%s";
 
 
         return String.format(format,methodName.substring(0,methodName.indexOf('(')),arguments,returnType);
@@ -104,12 +104,14 @@ public class Main {
                     if(c=='[')
                         stringBuilder.append(c);
                 }
+                arg = arg.replace("[","").replace("]","");
             }
 
             // / exists implies the current argument is not a primitive type => add L to the start
             if(arg.contains("/")){
                 stringBuilder.append("L");
                 stringBuilder.append(arg);
+                stringBuilder.append(";");
             }else if(arg.startsWith("int")){
                 stringBuilder.append("I");
             }else if(arg.startsWith("char")){
@@ -126,10 +128,6 @@ public class Main {
                 stringBuilder.append("S");
             }else if(arg.startsWith("byte")){
                 stringBuilder.append("B");
-            }
-
-            if(i!=argsArr.length-1){
-                stringBuilder.append(";");
             }
         }
         return stringBuilder.toString();
